@@ -24,6 +24,10 @@ declare global {
      */
     getCorsProxy(): Promise<string | undefined>;
     /**
+     * Show user a notification on the bottom left of the screen
+     */
+    createNotification(notification: NotificationMessage): Promise<void>;
+    /**
      * Callback method to get available instances for federated platforms
      */
     onGetInstances?(request?: GetInstancesRequest): Promise<GetInstancesResponse>;
@@ -297,6 +301,45 @@ declare global {
      * Number of comments on this instance
      */
     commentsCount?: number;
+  }
+
+  interface NotificationMessage {
+    /**
+     * Message to show
+     */
+    message: string;
+    type?: "default" | "success" | "error" | "warning" | "info";
+  }
+
+  /**
+   * Request to upload document data to cloud storage
+   */
+  export interface SyncUploadRequest {
+    docUrl: string;
+    data: string; // Base64-encoded Uint8Array
+  }
+
+  /**
+   * Response from upload operation
+   */
+  export interface SyncUploadResponse {
+    success: boolean;
+    error?: string;
+  }
+
+  /**
+   * Request to download document data from cloud storage
+   */
+  export interface SyncDownloadRequest {
+    docUrl: string;
+  }
+
+  /**
+   * Response from download operation
+   */
+  export interface SyncDownloadResponse {
+    data: string | null; // Base64-encoded Uint8Array, or null if not found
+    error?: string;
   }
 
   /**

@@ -107,6 +107,14 @@ declare global {
      * Callback method to get the platform type (forum, microblog, imageboard)
      */
     onGetPlatformType?(): Promise<PlatformType>;
+    /**
+     * Callback method to upload sync data to cloud storage
+     */
+    onSyncUpload?(request: SyncUploadRequest): Promise<SyncUploadResponse>;
+    /**
+     * Callback method to download sync data from cloud storage
+     */
+    onSyncDownload?(request: SyncDownloadRequest): Promise<SyncDownloadResponse>;
   }
 
   /**

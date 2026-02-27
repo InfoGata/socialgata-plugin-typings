@@ -76,9 +76,16 @@ declare global {
       request: GetTrendingTopicFeedRequest
     ): Promise<GetTrendingTopicFeedResponse>;
     /**
-     * Callback method to handle login
+     * Callback method to handle login.
+     * When popupName is provided, the host has opened a blank popup with that
+     * name. The plugin should navigate it via window.open(url, popupName).
      */
     onLogin?(request: LoginRequest): Promise<void>;
+    /**
+     * Callback method to handle the OAuth callback URL relayed by the host.
+     * Called after the popup redirects back with the full callback URL.
+     */
+    onLoginCallback?(request: LoginCallbackRequest): Promise<void>;
     /**
      * Callback method to handle logout
      */
@@ -537,6 +544,18 @@ declare global {
   interface LoginRequest {
     apiKey: string;
     apiSecret: string;
+    /**
+     * Name of the popup window opened by the host.
+     * Use window.open(url, popupName) to navigate it.
+     */
+    popupName?: string;
+  }
+
+  interface LoginCallbackRequest {
+    /**
+     * The full callback URL from the OAuth popup, including query parameters.
+     */
+    url: string;
   }
 
   /**

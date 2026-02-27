@@ -14,13 +14,10 @@ npm i --save-dev @infogata/socialgata-plugin-typings
 
 Configure _tsconfig.json_
 
-```js
+```json
 {
   "compilerOptions": {
-    "typeRoots": [
-      "./node_modules/@types",
-      "./node_modules/@infogata"
-    ]
+    "types": ["@infogata/socialgata-plugin-typings"]
   }
 }
 ```

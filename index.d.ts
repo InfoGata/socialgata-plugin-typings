@@ -78,9 +78,9 @@ declare global {
     /**
      * Callback method to handle login.
      * When popupName is provided, the host has opened a blank popup with that
-     * name. The plugin should navigate it via window.open(url, popupName).
+     * name. Return { url } to have the host navigate the popup.
      */
-    onLogin?(request: LoginRequest): Promise<void>;
+    onLogin?(request: LoginRequest): Promise<LoginResponse | void>;
     /**
      * Callback method to handle the OAuth callback URL relayed by the host.
      * Called after the popup redirects back with the full callback URL.
@@ -270,6 +270,10 @@ declare global {
      * Description of the community
      */
     description?: string;
+    /**
+     * URL to the original community page on the source platform
+     */
+    originalUrl?: string;
   }
 
   /**
@@ -549,6 +553,13 @@ declare global {
      * Use window.open(url, popupName) to navigate it.
      */
     popupName?: string;
+  }
+
+  interface LoginResponse {
+    /**
+     * URL the host should open in the popup for OAuth.
+     */
+    url?: string;
   }
 
   interface LoginCallbackRequest {

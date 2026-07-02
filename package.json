@@ -8,7 +8,7 @@
   "bugs": {
     "url": "https://github.com/InfoGata/socialgata-plugin-typings/issues"
   },
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Typings for the SocialGata Plugin API",
   "main": "",
   "scripts": {

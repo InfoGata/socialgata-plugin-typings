@@ -7,6 +7,10 @@ declare global {
      */
     networkRequest: typeof fetch;
     /**
+     * Used to determine whether requests from networkRequest are restricted by CORs.
+     */
+    isNetworkRequestCorsDisabled(): Promise<boolean>;
+    /**
      * Returns true if the user has been logged in based on what is in
      * authentication in the manifest
      */

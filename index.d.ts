@@ -252,6 +252,50 @@ declare global {
      * Instance Id for federated platforms
      */
     instanceId?: string;
+    /**
+     * Handle/username without the leading @ (e.g. "damn_jehu")
+     */
+    handle?: string;
+    /**
+     * Profile description/bio
+     */
+    bio?: string;
+    /**
+     * Banner/header image URL
+     */
+    banner?: string;
+    /**
+     * Location text from the profile
+     */
+    location?: string;
+    /**
+     * Website URL from the profile
+     */
+    website?: string;
+    /**
+     * When the user joined (e.g. "May 2023")
+     */
+    joinedDate?: string;
+    /**
+     * Whether the account is verified
+     */
+    verified?: boolean;
+    /**
+     * Number of followers
+     */
+    followerCount?: number;
+    /**
+     * Number of accounts this user follows
+     */
+    followingCount?: number;
+    /**
+     * Number of posts/tweets
+     */
+    tweetCount?: number;
+    /**
+     * Number of posts this user has liked
+     */
+    likeCount?: number;
   }
 
   /**

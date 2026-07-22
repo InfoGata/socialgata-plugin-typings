@@ -230,6 +230,10 @@ declare global {
      * Whether the post contains video content
      */
     isVideo?: boolean;
+    /**
+     * The tweet/post this post quotes, embedded inline (quote tweets)
+     */
+    quotedPost?: Post;
   }
 
   /**

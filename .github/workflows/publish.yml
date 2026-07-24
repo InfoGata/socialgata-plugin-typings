@@ -1,0 +1,55 @@
+name: Publish to npm
+
+# Release flow (no `np`): bump the version locally, which tags the commit,
+# then push the tag — CI publishes it.
+#
+#   npm version <patch|minor|major>
+#   git push --follow-tags
+#
+# Publishing uses npm OIDC trusted publishing: no NPM_TOKEN secret, and
+# provenance attestations are generated automatically. Configure this repo +
+# workflow as a trusted publisher once at:
+#   npmjs.com -> @infogata/socialgata-plugin-typings -> Settings -> Trusted Publisher
+
+on:
+  push:
+    tags:
+      - "v*"
+  # Allow re-running a publish by hand against an already-pushed tag.
+  workflow_dispatch:
+
+permissions:
+  id-token: write # required for OIDC trusted publishing
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          # Node 24 bundles npm >= 11.5.1, which trusted publishing requires.
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+          package-manager-cache: false # never cache in release builds
+
+      - run: npm ci
+
+      - run: npm test # runs tsc
+
+      # Guard against a mistagged push: the tag (v1.2.3) must match
+      # package.json. `npm version` keeps these in sync, so this only trips on
+      # a hand-made tag. Skipped for manual workflow_dispatch runs.
+      - name: Verify tag matches package.json version
+        if: github.event_name == 'push'
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          pkg="$(node -p "require('./package.json').version")"
+          if [ "$tag" != "$pkg" ]; then
+            echo "::error::Tag v$tag does not match package.json version $pkg"
+            exit 1
+          fi
+
+      - run: npm publish

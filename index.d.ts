@@ -231,9 +231,28 @@ declare global {
      */
     isVideo?: boolean;
     /**
+     * Playable sources for the video, best-quality/most-complete first.
+     * SocialGata tries them in order and falls back to the next one on failure.
+     */
+    videoSources?: VideoSource[];
+    /**
      * The tweet/post this post quotes, embedded inline (quote tweets)
      */
     quotedPost?: Post;
+  }
+
+  /**
+   * A single playable source for a video Post
+   */
+  interface VideoSource {
+    /**
+     * Url of the video
+     */
+    source: string;
+    /**
+     * Type of video. For example `video/mp4` or `application/x-mpegURL`
+     */
+    type?: string;
   }
 
   /**

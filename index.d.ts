@@ -513,6 +513,43 @@ declare global {
   }
 
   /**
+   * A time range/window for a sort (e.g. Reddit's Top: hour/day/week/...).
+   */
+  interface TimeRange {
+    /**
+     * Display name of the time range (e.g. "This Week")
+     */
+    displayName: string;
+    /**
+     * Id echoed back as timeRangeId (e.g. "week")
+     */
+    id: string;
+  }
+
+  /**
+   * A sort order for a feed, community, or user listing. Orthogonal to
+   * FeedType: a plugin may offer both feed-type tabs and a sort selector.
+   */
+  interface SortOption {
+    /**
+     * Display name of the sort (e.g. "Top")
+     */
+    displayName: string;
+    /**
+     * Id echoed back as sortId (e.g. "top")
+     */
+    id: string;
+    /**
+     * Time ranges this sort accepts. Omit when the sort takes no time range.
+     */
+    timeRanges?: TimeRange[];
+    /**
+     * Time range used when none is selected
+     */
+    defaultTimeRangeId?: string;
+  }
+
+  /**
    * A trending topic or hashtag
    */
   interface TrendingTopic {
@@ -549,6 +586,14 @@ declare global {
     pageInfo?: PageInfo;
     instanceId?: string;
     feedTypeId?: string;
+    /**
+     * Selected sort order id (matches a SortOption.id from the response)
+     */
+    sortId?: string;
+    /**
+     * Selected time range id for sorts that declare time ranges
+     */
+    timeRangeId?: string;
   }
 
   interface GetFeedResponse {
@@ -557,18 +602,50 @@ declare global {
     feedTypes?: FeedType[];
     feedTypeId?: string;
     instance?: Instance;
+    /**
+     * Available sort orders for this feed
+     */
+    sortOptions?: SortOption[];
+    /**
+     * Currently applied sort order id
+     */
+    sortId?: string;
+    /**
+     * Currently applied time range id
+     */
+    timeRangeId?: string;
   }
 
   interface GetCommunityRequest {
     apiId: string;
     instanceId?: string;
     pageInfo?: PageInfo;
+    /**
+     * Selected sort order id (matches a SortOption.id from the response)
+     */
+    sortId?: string;
+    /**
+     * Selected time range id for sorts that declare time ranges
+     */
+    timeRangeId?: string;
   }
 
   interface GetCommunityResponse {
     pageInfo?: PageInfo;
     community?: Community;
     items: Post[];
+    /**
+     * Available sort orders for this community
+     */
+    sortOptions?: SortOption[];
+    /**
+     * Currently applied sort order id
+     */
+    sortId?: string;
+    /**
+     * Currently applied time range id
+     */
+    timeRangeId?: string;
   }
 
   interface GetCommunitiesRequest {
@@ -584,12 +661,32 @@ declare global {
   interface GetUserRequest {
     apiId: string;
     instanceId?: string;
+    /**
+     * Selected sort order id (matches a SortOption.id from the response)
+     */
+    sortId?: string;
+    /**
+     * Selected time range id for sorts that declare time ranges
+     */
+    timeRangeId?: string;
   }
 
   interface GetUserResponse {
     pageInfo?: PageInfo;
     user?: User;
     items: Post[];
+    /**
+     * Available sort orders for this user's listing
+     */
+    sortOptions?: SortOption[];
+    /**
+     * Currently applied sort order id
+     */
+    sortId?: string;
+    /**
+     * Currently applied time range id
+     */
+    timeRangeId?: string;
   }
 
   interface GetCommentsRequest {

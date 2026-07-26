@@ -68,6 +68,14 @@ declare global {
      */
     onSearch?(request: SearchRequest): Promise<SearchResponse>;
     /**
+     * Callback method to search for posts within a single community.
+     * Define this to advertise that the plugin can scope a search to one
+     * community; the host only offers in-community search when it is present.
+     */
+    onSearchCommunity?(
+      request: SearchCommunityRequest
+    ): Promise<SearchCommunityResponse>;
+    /**
      * Callback method to get trending topics/hashtags
      */
     onGetTrendingTopics?(
@@ -724,6 +732,55 @@ declare global {
   interface SearchResponse {
     items: Post[];
     pageInfo?: PageInfo;
+  }
+
+  /**
+   * Request to search for posts within a single community
+   */
+  interface SearchCommunityRequest {
+    /**
+     * The search query
+     */
+    query: string;
+    /**
+     * apiId of the community to search within
+     */
+    communityApiId: string;
+    pageInfo?: PageInfo;
+    instanceId?: string;
+    /**
+     * Selected sort order id (matches a SortOption.id from the response)
+     */
+    sortId?: string;
+    /**
+     * Selected time range id for sorts that declare time ranges
+     */
+    timeRangeId?: string;
+  }
+
+  /**
+   * Response containing posts matching a search within a community
+   */
+  interface SearchCommunityResponse {
+    items: Post[];
+    pageInfo?: PageInfo;
+    /**
+     * The community that was searched, when the plugin can supply it
+     */
+    community?: Community;
+    /**
+     * Available sort orders for these search results. Search sorts often
+     * differ from a community's listing sorts.
+     */
+    sortOptions?: SortOption[];
+    /**
+     * Currently applied sort order id
+     */
+    sortId?: string;
+    /**
+     * Currently applied time range id
+     */
+    timeRangeId?: string;
   }
 
   interface GetTrendingTopicsRequest {

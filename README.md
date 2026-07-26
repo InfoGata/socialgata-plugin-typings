@@ -39,6 +39,7 @@ SocialGata plugins can implement the following callback methods:
 - `onGetCommunity(request: GetCommunityRequest)` - Get posts from a specific community
 - `onGetCommunities(request: GetCommunitiesRequest)` - Get list of communities
 - `onSearch(request: SearchRequest)` - Search for posts
+- `onSearchCommunity(request: SearchCommunityRequest)` - Search for posts within a single community
 
 ### Comment Methods
 - `onGetComments(request: GetCommentsRequest)` - Get comments for a post

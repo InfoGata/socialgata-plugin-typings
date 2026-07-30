@@ -701,6 +701,12 @@ declare global {
     communityId?: string;
     apiId?: string;
     instanceId?: string;
+    /**
+     * Load a single comment thread instead of the whole post: the comment with
+     * this api id becomes the only item returned, with its replies nested
+     * beneath it. Used for comment permalinks.
+     */
+    commentApiId?: string;
   }
 
   interface GetCommentsResponse {

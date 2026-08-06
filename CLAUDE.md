@@ -39,7 +39,7 @@ git push --follow-tags
 
 - `apiId` — the third-party service's id for an entity. `pluginId` and `instanceId` are set by the host / used for federation.
 - `PageInfo` — the single pagination type; threaded through nearly every request and response.
-- `sortId` / `timeRangeId` — a response advertises `SortOption[]` (each optionally carrying `TimeRange[]`), and the host echoes the chosen ids back on the next request. Present on the feed, community, and user triads; these three must stay in sync with each other.
+- `sortId` / `timeRangeId` — a response advertises `SortOption[]` (each optionally carrying `TimeRange[]`), and the host echoes the chosen ids back on the next request. Present on the feed, community, user, community-search, and comments triads; these must stay in sync with each other.
 - `FeedType` is orthogonal to `SortOption` — feed-type tabs and a sort selector can both be offered.
 - `Post` is deliberately overloaded: it represents posts, comments (`parentId`, `comments`, `isSubmitter`), and imageboard replies (`number`). Comment-only and post-only fields coexist on it by design.
 

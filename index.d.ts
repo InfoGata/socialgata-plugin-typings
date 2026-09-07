@@ -32,6 +32,28 @@ declare global {
      */
     createNotification(notification: NotificationMessage): Promise<void>;
     /**
+     * Whether the user wants adult content requested from the source at all.
+     *
+     * Call this before a request that can include adult content and, when it
+     * resolves false, ask the source not to send any — `show_nsfw: false` on
+     * Lemmy, dropping `include_over_18` on Reddit, skipping boards that aren't
+     * work safe. The content then never reaches the device, which is better
+     * than fetching it and declining to draw it.
+     *
+     * This is advisory, not a permission check. The host gates adult content on
+     * display regardless of what a plugin does, so ignoring this is safe but
+     * wasteful. It resolves true whenever the user might still choose to reveal
+     * an individual item, and false only when they've asked for adult content
+     * to be left out entirely — a plugin that filters on anything looser will
+     * hide posts the user expected to be able to open.
+     *
+     * A host that predates this method doesn't implement it, and the call then
+     * **rejects** rather than resolving undefined — optional chaining and `??`
+     * won't help. Guard it with try/catch and treat a rejection as true, which
+     * is the behavior from before the preference existed.
+     */
+    getShowNsfw(): Promise<boolean>;
+    /**
      * Callback method to get available instances for federated platforms
      */
     onGetInstances?(request?: GetInstancesRequest): Promise<GetInstancesResponse>;

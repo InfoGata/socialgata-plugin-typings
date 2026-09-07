@@ -433,6 +433,17 @@ declare global {
      * URL to the original community page on the source platform
      */
     originalUrl?: string;
+    /**
+     * Whether the whole community is marked as not-safe-for-work / adult
+     * content, such as a subreddit flagged `over_18`, a Lemmy community marked
+     * `nsfw`, or an imageboard board that isn't work safe.
+     *
+     * Set this in addition to `Post.nsfw`, not instead of it. Some sources
+     * classify only at the community level and never flag the individual
+     * posts, and the host treats every post in a community marked this way as
+     * adult content regardless of the post's own flag.
+     */
+    nsfw?: boolean;
   }
 
   /**

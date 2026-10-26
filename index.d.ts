@@ -11,6 +11,14 @@ declare global {
      */
     isNetworkRequestCorsDisabled(): Promise<boolean>;
     /**
+     * Whether requests matching the manifest's `pageContextRequests` can be
+     * made from a page on their own site here (the extension, the desktop
+     * build, Android). Resolves once extension detection has settled, so it
+     * may take a few seconds in a browser without the extension. Hosts that
+     * predate it reject the call; treat that as false.
+     */
+    isPageContextAvailable(): Promise<boolean>;
+    /**
      * Returns true if the user has been logged in based on what is in
      * authentication in the manifest
      */

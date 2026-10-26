@@ -30,7 +30,7 @@ git push --follow-tags
 
 **The `Application` interface is the whole API surface.** It has two kinds of members:
 
-- **Host-provided methods** (non-optional: `networkRequest`, `getTheme`, `createNotification`, `postUiMessage`, `getCorsProxy`, `isLoggedIn`, `isNetworkRequestCorsDisabled`) — implemented by SocialGata, called by the plugin via the global `application` const. Plugins run in a sandboxed frame, so `networkRequest` (a `typeof fetch`) exists to proxy requests through the parent frame.
+- **Host-provided methods** (non-optional: `networkRequest`, `getTheme`, `createNotification`, `postUiMessage`, `getCorsProxy`, `isLoggedIn`, `isNetworkRequestCorsDisabled`, `isPageContextAvailable`) — implemented by SocialGata, called by the plugin via the global `application` const. Plugins run in a sandboxed frame, so `networkRequest` (a `typeof fetch`) exists to proxy requests through the parent frame.
 - **`on*` callbacks** (all optional) — implemented by the *plugin*, called by the host. Optionality is the capability model: a plugin advertises what it supports by which callbacks it defines. Adding a new plugin capability means adding an optional `on*` method here.
 
 **Request/Response pairing.** Every `on*` data callback takes a `XRequest` and returns a `Promise<XResponse>`. Keep this symmetry when adding methods.

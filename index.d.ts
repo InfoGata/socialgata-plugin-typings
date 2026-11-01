@@ -106,6 +106,13 @@ declare global {
       request: SearchCommunityRequest
     ): Promise<SearchCommunityResponse>;
     /**
+     * Callback method to get the posts that link to one site, the way Hacker
+     * News (`from?site=`), Lobsters (`/domains/`) and old Reddit (`/domain/`)
+     * list them. Define this to advertise a domain page: the host only links a
+     * post's domain to it when it is present.
+     */
+    onGetDomain?(request: GetDomainRequest): Promise<GetDomainResponse>;
+    /**
      * Callback method to get trending topics/hashtags
      */
     onGetTrendingTopics?(
@@ -749,6 +756,40 @@ declare global {
   interface GetCommunitiesResponse {
     items: Community[];
     pageInfo?: PageInfo;
+  }
+
+  interface GetDomainRequest {
+    /**
+     * Hostname the posts link to, lowercased and without a leading `www.`
+     * (e.g. "github.com", "en.wikipedia.org")
+     */
+    domain: string;
+    pageInfo?: PageInfo;
+    /**
+     * Selected sort order id (matches a SortOption.id from the response)
+     */
+    sortId?: string;
+    /**
+     * Selected time range id for sorts that declare time ranges
+     */
+    timeRangeId?: string;
+  }
+
+  interface GetDomainResponse {
+    items: Post[];
+    pageInfo?: PageInfo;
+    /**
+     * Available sort orders for this domain's listing
+     */
+    sortOptions?: SortOption[];
+    /**
+     * Currently applied sort order id
+     */
+    sortId?: string;
+    /**
+     * Currently applied time range id
+     */
+    timeRangeId?: string;
   }
 
   interface GetUserRequest {

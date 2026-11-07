@@ -113,6 +113,15 @@ declare global {
      */
     onGetDomain?(request: GetDomainRequest): Promise<GetDomainResponse>;
     /**
+     * Callback method to get the other posts about the same thing as one post:
+     * old Reddit's "other discussions" (`/duplicates/`), the other submissions
+     * of the same link and its crossposts. Define this to advertise the page:
+     * the host only links a post to it when it is present.
+     */
+    onGetPostDuplicates?(
+      request: GetPostDuplicatesRequest
+    ): Promise<GetPostDuplicatesResponse>;
+    /**
      * Callback method to get trending topics/hashtags
      */
     onGetTrendingTopics?(
@@ -790,6 +799,40 @@ declare global {
      * Currently applied time range id
      */
     timeRangeId?: string;
+  }
+
+  interface GetPostDuplicatesRequest {
+    /**
+     * Api id of the post whose other discussions are wanted
+     */
+    apiId: string;
+    communityId?: string;
+    instanceId?: string;
+    pageInfo?: PageInfo;
+    /**
+     * Selected sort order id (matches a SortOption.id from the response)
+     */
+    sortId?: string;
+  }
+
+  interface GetPostDuplicatesResponse {
+    /**
+     * The other posts, not including the original
+     */
+    items: Post[];
+    /**
+     * The original post, for the page's header
+     */
+    post?: Post;
+    pageInfo?: PageInfo;
+    /**
+     * Available sort orders for the listing
+     */
+    sortOptions?: SortOption[];
+    /**
+     * Currently applied sort order id
+     */
+    sortId?: string;
   }
 
   interface GetUserRequest {

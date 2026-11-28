@@ -462,6 +462,16 @@ declare global {
      * Number of posts this user has liked
      */
     likeCount?: number;
+    /**
+     * Reputation score where the platform has one (e.g. Reddit karma, post
+     * plus comment)
+     */
+    karma?: number;
+    /**
+     * Whether the profile is marked as not-safe-for-work / adult content
+     * (e.g. a Reddit profile flagged `over_18`)
+     */
+    nsfw?: boolean;
   }
 
   /**
@@ -499,6 +509,14 @@ declare global {
      * adult content regardless of the post's own flag.
      */
     nsfw?: boolean;
+    /**
+     * Icon/avatar image URL of the community
+     */
+    iconUrl?: string;
+    /**
+     * Number of members/subscribers
+     */
+    memberCount?: number;
   }
 
   /**
@@ -947,7 +965,22 @@ declare global {
   }
 
   interface SearchResponse {
+    /**
+     * Matching posts. Empty when the selected result type is communities or
+     * users, which are returned in `communities` / `users` instead.
+     */
     items: Post[];
+    /**
+     * Matching communities, for a result type that searches communities
+     * (e.g. a "Subreddits" tab). When present, the host shows these instead
+     * of `items`.
+     */
+    communities?: Community[];
+    /**
+     * Matching users, for a result type that searches accounts (e.g. a
+     * "Users" tab). When present, the host shows these instead of `items`.
+     */
+    users?: User[];
     pageInfo?: PageInfo;
     /**
      * Kinds of result the search can be narrowed to, shown as tabs
